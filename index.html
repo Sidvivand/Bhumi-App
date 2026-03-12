@@ -61,18 +61,16 @@ const analytics = getAnalytics(app);
 
     // 5. The function to send the OTP
     window.sendOTP = function() {
-        const phoneNumber = document.getElementById('phone').value;
-        const appVerifier = window.recaptchaVerifier;
-
-        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-            .then((confirmationResult) => {
-                window.confirmationResult = confirmationResult;
-                document.getElementById('otp-form').style.display = 'block';
-                alert("OTP Sent Successfully!");
-            }).catch((error) => {
-                alert("Error: " + error.message);
-            });
+    let phoneNumber = document.getElementById('phone').value;
+    
+    // This adds +91 automatically if the user didn't type it
+    if (!phoneNumber.startsWith('+')) {
+        phoneNumber = '+91' + phoneNumber;
     }
+    
+    const appVerifier = window.recaptchaVerifier;
+    // ... rest of the code stays the same
+
 
     // 6. The function to verify the OTP
     window.verifyOTP = function() {
