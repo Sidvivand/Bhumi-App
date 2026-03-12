@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhumi - Secure Login</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+        h2 { color: #2d5a27; margin-bottom: 1.5rem; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #2d5a27; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        #recaptcha-container { margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h2>BHUMI</h2>
+    <p>Virtual Real Estate Security</p>
+    <div id="login-form">
+        <input type="tel" id="phone" placeholder="+91 0000000000">
+        <div id="recaptcha-container"></div>
+        <button onclick="sendOTP()">Send OTP</button>
+    </div>
+    <div id="otp-form" style="display:none;">
+        <input type="number" id="otp" placeholder="Enter 6-digit OTP">
+        <button onclick="verifyOTP()">Verify & Register</button>
+    </div>
+</div>
+
+<script>
+    // These are your unique security keys from Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyA0BKZSSQJ9B7kY-k8d-b0",
+        authDomain: "bhumi-real-estate.firebaseapp.com",
+        projectId: "bhumi-real-estate",
+        storageBucket: "bhumi-real-estate.firebasestorage.app",
+        messagingSenderId: "794838101327",
+        appId: "1:794838101327:web:3ac539383"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+    function sendOTP() {
+        const phoneNumber = document.getElementById('phone').value;
+        const appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+                window.confirmationResult = confirmationResult;
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('otp-form').style.display = 'block';
+                alert("OTP Sent!");
+            }).catch((error) => { alert("Error: " + error.message); });
+    }
+
+    function verifyOTP() {
+        const code = document.getElementById('otp').value;
+        confirmationResult.confirm(code).then((result) => {
+            alert("Registration Successful! Welcome to Bhumi.");
+        }).catch((error) => { alert("Invalid OTP"); });
+    }
+</script>
+</body>
+</html>
