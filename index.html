@@ -31,48 +31,54 @@
     </div>
 </div>
 
-<script>
-    // These are your unique security keys from Firebase
-    // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+<script type="module">
+    // 1. We use the full web link (CDN) so the browser can find Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA0BKZSSQJ9B7kY-k8d-bcbFIHKvVOA2VQ",
-  authDomain: "bhumi-real-estate.firebaseapp.com",
-  projectId: "bhumi-real-estate",
-  storageBucket: "bhumi-real-estate.firebasestorage.app",
-  messagingSenderId: "794838101327",
-  appId: "1:794838101327:web:3ac539383cafc519fce93a",
-  measurementId: "G-27YBEC031J"
-};
+    // 2. Your actual keys from your photo
+    const firebaseConfig = {
+        apiKey: "AIzaSyA0BKZSSQJ9B7kY-k8d-bcbFIHKvVOA2VQ",
+        authDomain: "bhumi-real-estate.firebaseapp.com",
+        projectId: "bhumi-real-estate",
+        storageBucket: "bhumi-real-estate.firebasestorage.app",
+        messagingSenderId: "794838101327",
+        appId: "1:794838101327:web:3ac539383cafc519fce93a",
+        measurementId: "G-27YBEC031J"
+    };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+    // 3. Initialize Firebase and Auth
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    function sendOTP() {
+    // 4. Setup the Recaptcha
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        'size': 'normal'
+    });
+
+    // 5. The function to send the OTP
+    window.sendOTP = function() {
         const phoneNumber = document.getElementById('phone').value;
         const appVerifier = window.recaptchaVerifier;
-        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+
+        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
             .then((confirmationResult) => {
                 window.confirmationResult = confirmationResult;
-                document.getElementById('login-form').style.display = 'none';
                 document.getElementById('otp-form').style.display = 'block';
-                alert("OTP Sent!");
-            }).catch((error) => { alert("Error: " + error.message); });
+                alert("OTP Sent Successfully!");
+            }).catch((error) => {
+                alert("Error: " + error.message);
+            });
     }
 
-    function verifyOTP() {
+    // 6. The function to verify the OTP
+    window.verifyOTP = function() {
         const code = document.getElementById('otp').value;
-        confirmationResult.confirm(code).then((result) => {
-            alert("Registration Successful! Welcome to Bhumi.");
-        }).catch((error) => { alert("Invalid OTP"); });
+        window.confirmationResult.confirm(code).then((result) => {
+            alert("Login Successful! Welcome to Bhumi.");
+            // Next we will add the Dashboard redirect here
+        }).catch((error) => {
+            alert("Invalid OTP. Please try again.");
+        });
     }
 </script>
-</body>
-</html>
