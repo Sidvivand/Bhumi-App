@@ -3,93 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhumi - Secure Login</title>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <title>BHUMI - Secure Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
-        h2 { color: #2d5a27; margin-bottom: 1.5rem; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #2d5a27; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        #recaptcha-container { margin: 10px 0; }
+        @import url('https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap');
+        body { font-family: 'Jost', sans-serif; background-color: #f3f4f6; }
     </style>
 </head>
-<body>
+<body class="flex items-center justify-center h-screen px-4">
 
-<div class="login-card">
-    <h2>BHUMI</h2>
-    <p>Virtual Real Estate Security</p>
-    <div id="login-form">
-        <input type="tel" id="phone" placeholder="+91 0000000000">
-        <div id="recaptcha-container"></div>
-        <button onclick="sendOTP()">Send OTP</button>
-    </div>
-    <div id="otp-form" style="display:none;">
-        <input type="number" id="otp" placeholder="Enter 6-digit OTP">
-        <button onclick="verifyOTP()">Verify & Register</button>
-    </div>
-</div>
-
-<script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA0BKZSSQJ9B7kY-k8d-bcbFIHKvVOA2VQ",
-  authDomain: "bhumi-real-estate.firebaseapp.com",
-  projectId: "bhumi-real-estate",
-  storageBucket: "bhumi-real-estate.firebasestorage.app",
-  messagingSenderId: "794838101327",
-  appId: "1:794838101327:web:3ac539383cafc519fce93a",
-  measurementId: "G-27YBEC031J"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-    // 4. Setup the Recaptcha
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-        'size': 'normal'
-    });
-
-        // 5. The function to send the OTP
-    window.sendOTP = function() {
-        let phoneNumber = document.getElementById('phone').value;
+    <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-sm text-center border border-gray-100">
+        <h1 class="text-4xl font-bold text-green-800 mb-2 tracking-widest">BHUMI</h1>
+        <p class="text-gray-500 mb-8 text-sm">Virtual Real Estate Security</p>
         
-        // This adds +91 automatically if the user didn't type it
-        if (!phoneNumber.startsWith('+')) {
-            phoneNumber = '+91' + phoneNumber;
+        <div id="login-section">
+            <input type="tel" id="user-phone" placeholder="9420545485" 
+                class="w-full p-4 bg-blue-50 border-none rounded-2xl mb-6 text-center text-lg focus:ring-2 focus:ring-green-600 outline-none">
+            
+            <div id="recaptcha-container" class="flex justify-center mb-4"></div>
+
+            <button onclick="sendOTP()" class="w-full bg-green-800 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-900 transition-all">
+                Send OTP
+            </button>
+        </div>
+
+        <div id="otp-section" class="hidden">
+            <input type="number" id="otp-code" placeholder="Enter 6-digit OTP" 
+                class="w-full p-4 bg-blue-50 border-none rounded-2xl mb-6 text-center text-lg focus:ring-2 focus:ring-blue-600 outline-none">
+            
+            <button onclick="verifyOTP()" class="w-full bg-blue-800 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-blue-900 transition-all">
+                Verify & Login
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Your real keys from your screenshot
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0BKZSSQJ9B7kY-k8d-bcbFIHKvVOA2VQ",
+            authDomain: "bhumi-real-estate.firebaseapp.com",
+            projectId: "bhumi-real-estate",
+            storageBucket: "bhumi-real-estate.firebasestorage.app",
+            messagingSenderId: "794838101327",
+            appId: "1:794838101327:web:3ac539383cafc519fce93a",
+            measurementId: "G-27YBEC031J"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Initialize Captcha
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'normal' });
+
+        // SEND OTP FUNCTION
+        window.sendOTP = function() {
+            let phoneNumber = document.getElementById('user-phone').value;
+            if(!phoneNumber.startsWith('+')) { phoneNumber = '+91' + phoneNumber; }
+
+            const appVerifier = window.recaptchaVerifier;
+
+            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('otp-section').classList.remove('hidden');
+                    alert("OTP Sent Successfully!");
+                }).catch((error) => {
+                    alert("Error: " + error.message);
+                    location.reload(); // Reloads if there is a captcha error
+                });
         }
 
-        const appVerifier = window.recaptchaVerifier;
-
-        // This is the actual part that talks to Firebase
-        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-            .then((confirmationResult) => {
-                window.confirmationResult = confirmationResult;
-                document.getElementById('otp-form').style.display = 'block';
-                alert("OTP Sent Successfully!");
+        // VERIFY OTP FUNCTION
+        window.verifyOTP = function() {
+            const code = document.getElementById('otp-code').value;
+            window.confirmationResult.confirm(code).then(() => {
+                alert("Login Successful! Welcome to Bhumi.");
+                // We will add the redirect to your main app page here next!
             }).catch((error) => {
-                alert("Error: " + error.message);
+                alert("Invalid OTP. Try again.");
             });
-    }
-    
-
-    // 6. The function to verify the OTP
-    window.verifyOTP = function() {
-        const code = document.getElementById('otp').value;
-        window.confirmationResult.confirm(code).then((result) => {
-            alert("Login Successful! Welcome to Bhumi.");
-            // Next we will add the Dashboard redirect here
-        }).catch((error) => {
-            alert("Invalid OTP. Please try again.");
-        });
-    }
-</script>
+        }
+    </script>
+</body>
+</html>
