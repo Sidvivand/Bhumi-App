@@ -33,17 +33,27 @@
 
 <script>
     // These are your unique security keys from Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyA0BKZSSQJ9B7kY-k8d-b0",
-        authDomain: "bhumi-real-estate.firebaseapp.com",
-        projectId: "bhumi-real-estate",
-        storageBucket: "bhumi-real-estate.firebasestorage.app",
-        messagingSenderId: "794838101327",
-        appId: "1:794838101327:web:3ac539383"
-    };
-    firebase.initializeApp(firebaseConfig);
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyA0BKZSSQJ9B7kY-k8d-bcbFIHKvVOA2VQ",
+  authDomain: "bhumi-real-estate.firebaseapp.com",
+  projectId: "bhumi-real-estate",
+  storageBucket: "bhumi-real-estate.firebasestorage.app",
+  messagingSenderId: "794838101327",
+  appId: "1:794838101327:web:3ac539383cafc519fce93a",
+  measurementId: "G-27YBEC031J"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
     function sendOTP() {
         const phoneNumber = document.getElementById('phone').value;
