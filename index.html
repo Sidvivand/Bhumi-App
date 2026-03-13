@@ -3,124 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BHUMI - Universal Ecosystem by Vivand</title>
+    <title>BHUMI PRO - Real Estate Trading</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
-        body { font-family: 'Outfit', sans-serif; background: #011a13; color: white; margin: 0; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 35px; }
+        body { font-family: 'Outfit', sans-serif; background: #0b0e11; color: #eaeaeb; margin: 0; overflow-x: hidden; }
+        .glass { background: #1e2329; border: 1px solid #2b3139; border-radius: 24px; }
         .hidden { display: none !important; }
         
-        /* 3D Metaverse Grid */
-        .meta-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; background: rgba(16, 185, 129, 0.05); padding: 15px; border-radius: 25px; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .plot { aspect-ratio: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 900; }
-        .plot-owned { background: #10b981; color: #011a13; box-shadow: 0 0 15px #10b981; }
+        /* Trading Chart Mockup */
+        .chart-bar { width: 4px; border-radius: 2px; background: #0ecb81; margin: 0 1px; }
+        .chart-bar.down { background: #f6465d; }
 
         /* Ticker Animation */
-        .ticker-bar { width: 100%; overflow: hidden; background: #10b981; color: #011a13; padding: 6px 0; font-weight: 900; font-size: 10px; }
-        .ticker-scroll { display: inline-block; white-space: nowrap; animation: scroll 40s linear infinite; }
+        .ticker-bar { background: #1e2329; border-bottom: 1px solid #2b3139; padding: 8px 0; font-size: 11px; font-weight: 600; }
+        .ticker-scroll { display: inline-block; white-space: nowrap; animation: scroll 30s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* Navigation */
-        .nav-item { opacity: 0.3; transition: 0.3s; cursor: pointer; }
-        .nav-item.active { opacity: 1; color: #10b981; }
+        .btn-buy { background: #0ecb81; color: #0b0e11; transition: 0.2s; }
+        .btn-buy:active { transform: scale(0.95); opacity: 0.8; }
+        .btn-sell { background: #f6465d; color: white; transition: 0.2s; }
+        
+        .nav-active { color: #f0b90b; }
     </style>
 </head>
 <body>
 
-    <div id="splash-screen" class="fixed inset-0 z-[9999] bg-[#011a13] flex flex-col items-center justify-center transition-opacity duration-1000">
-        <div class="text-8xl text-green-400 mb-6 animate-pulse"><i class="fa-solid fa-layer-group"></i></div>
-        <h1 class="text-5xl font-black tracking-[15px]">BHUMI</h1>
-        <p class="text-[9px] text-green-300/40 uppercase tracking-[6px] mt-4 font-bold">Vivand Software Pvt Ltd</p>
-        <div class="w-48 h-1 bg-white/10 mt-10 rounded-full overflow-hidden">
-            <div class="h-full bg-green-500 animate-[load_3.5s_ease-in-out_forwards]"></div>
-        </div>
+    <div id="splash-screen" class="fixed inset-0 z-[9999] bg-[#0b0e11] flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="text-7xl text-[#f0b90b] mb-6 animate-pulse"><i class="fa-solid fa-chart-line"></i></div>
+        <h1 class="text-4xl font-black tracking-[12px] text-white">BHUMI<span class="text-[#f0b90b]">PRO</span></h1>
+        <p class="text-[9px] text-gray-500 uppercase tracking-[4px] mt-4">Powered by Vivand Software</p>
     </div>
 
-    <div id="login-section" class="hidden min-h-screen flex items-center justify-center p-6 bg-black">
-        <div class="glass p-10 w-full max-w-sm text-center border-t border-white/10">
-            <h2 class="text-3xl font-black mb-10 tracking-tighter">Secure Entry</h2>
+    <div id="login-section" class="hidden min-h-screen flex items-center justify-center p-6">
+        <div class="glass p-8 w-full max-w-sm">
+            <h2 class="text-2xl font-black mb-8 text-center text-white">Institutional Login</h2>
             <div id="login-form">
-                <input type="tel" id="user-phone" placeholder="9420545485" class="w-full bg-white/5 p-5 rounded-2xl mb-6 text-center outline-none border border-white/10">
-                <div id="recaptcha-container" class="mb-6 flex justify-center"></div>
-                <button onclick="sendOTP()" class="w-full bg-green-600 py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl">Connect Identity</button>
+                <div class="bg-[#2b3139] rounded-xl flex items-center px-4 mb-4">
+                    <span class="text-gray-500 text-sm mr-3">+91</span>
+                    <input type="tel" id="user-phone" placeholder="9420545485" class="w-full bg-transparent py-4 text-white outline-none">
+                </div>
+                <div id="recaptcha-container" class="mb-4 flex justify-center scale-90"></div>
+                <button onclick="sendOTP()" class="w-full btn-buy py-4 rounded-xl font-black uppercase tracking-widest text-sm">Secure Entry</button>
             </div>
             <div id="otp-form" class="hidden">
-                <input type="number" id="otp-code" placeholder="OTP" class="w-full bg-white/10 p-5 rounded-2xl mb-6 text-center text-4xl font-black border-2 border-green-500">
-                <button onclick="verifyOTP()" class="w-full bg-white text-green-900 py-5 rounded-2xl font-black">Verify Wallet</button>
+                <input type="number" id="otp-code" placeholder="Enter OTP" class="w-full bg-[#2b3139] p-4 rounded-xl mb-4 text-center text-2xl font-black text-white outline-none border border-[#f0b90b]">
+                <button onclick="verifyOTP()" class="w-full bg-white text-black py-4 rounded-xl font-black">Verify Identity</button>
             </div>
         </div>
     </div>
 
-    <div id="dashboard" class="hidden min-h-screen pb-32 opacity-0 transition-opacity duration-1000">
-        <div class="ticker-bar"><div class="ticker-scroll">LIVE MARKET: Sector 7 (+2.1%) • Vivand Decor Center Open • Virtual Land Yields ↑ 12.4% • Get Furniture at 20% discount</div></div>
-
-        <div class="p-6 pt-8 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="w-14 h-14 bg-green-600 rounded-2xl flex items-center justify-center font-black text-2xl border border-white/20">V</div>
-                <div><h3 class="font-black text-xl">Bhumi Hub</h3><p class="text-[9px] text-green-400 font-bold uppercase tracking-widest">Master Investor</p></div>
-            </div>
-            <button onclick="location.reload()" class="bg-white/5 p-4 rounded-2xl text-red-500 border border-white/10"><i class="fa-solid fa-power-off"></i></button>
-        </div>
-
-        <div class="px-6 mb-8">
-            <div class="bg-gradient-to-br from-green-600 to-green-900 p-8 rounded-[40px] shadow-2xl relative overflow-hidden">
-                <p class="text-[9px] uppercase font-bold text-white/50 mb-1">Ecosystem Balance</p>
-                <h2 class="text-4xl font-black">₹ 8,42,500</h2>
-                <div class="flex gap-4 mt-6">
-                    <button onclick="contactAgent('Add Money via UPI')" class="flex-1 bg-white text-green-900 py-3 rounded-xl font-black text-[10px] uppercase">Add Funds</button>
-                    <button class="flex-1 bg-black/20 py-3 rounded-xl font-black text-[10px] uppercase">Withdraw</button>
-                </div>
+    <div id="dashboard" class="hidden min-h-screen pb-24 opacity-0 transition-opacity duration-1000">
+        
+        <div class="ticker-bar">
+            <div class="ticker-scroll">
+                <span class="text-[#0ecb81]">VIV-S4 ₹3,421 (+2.4%)</span> &nbsp;&nbsp; 
+                <span class="text-[#f6465d]">GRN-P8 ₹1,120 (-0.8%)</span> &nbsp;&nbsp;
+                <span class="text-[#0ecb81]">SKY-H1 ₹8,900 (+4.1%)</span> &nbsp;&nbsp;
+                <span class="text-gray-400">MARKET OPEN • VOLUME: 42.5 Cr</span>
             </div>
         </div>
 
-        <div class="px-6 mb-8">
-            <h4 class="text-[10px] font-black uppercase tracking-[4px] text-white/30 mb-4">Civil & Lifestyle Services</h4>
-            <div class="grid grid-cols-4 gap-3">
-                <div class="bg-white/5 p-4 rounded-2xl flex flex-col items-center gap-2 border border-white/5">
-                    <i class="fa-solid fa-helmet-safety text-orange-400"></i><span class="text-[8px] font-black uppercase">Civil</span>
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Equity Value</p>
+                    <h2 class="text-3xl font-black text-white">₹ 42,50,000.00</h2>
+                    <p class="text-xs text-[#0ecb81] font-bold">+ ₹ 1,240.50 (Today)</p>
                 </div>
-                <div class="bg-white/5 p-4 rounded-2xl flex flex-col items-center gap-2 border border-white/5" onclick="contactAgent('Furniture Catalog')">
-                    <i class="fa-solid fa-couch text-purple-400"></i><span class="text-[8px] font-black uppercase">Decor</span>
-                </div>
-                <div class="bg-white/5 p-4 rounded-2xl flex flex-col items-center gap-2 border border-white/5">
-                    <i class="fa-solid fa-gavel text-blue-400"></i><span class="text-[8px] font-black uppercase">Legal</span>
-                </div>
-                <div class="bg-white/5 p-4 rounded-2xl flex flex-col items-center gap-2 border border-white/5">
-                    <i class="fa-solid fa-screwdriver-wrench text-yellow-400"></i><span class="text-[8px] font-black uppercase">Maint</span>
+                <div class="flex gap-2">
+                    <button class="bg-[#2b3139] p-3 rounded-xl text-white"><i class="fa-solid fa-wallet"></i></button>
+                    <button onclick="location.reload()" class="bg-[#2b3139] p-3 rounded-xl text-red-500"><i class="fa-solid fa-power-off"></i></button>
                 </div>
             </div>
-        </div>
 
-        <div class="px-6 mb-8">
-            <h4 class="text-[10px] font-black uppercase tracking-[4px] text-white/30 mb-4">Virtual Grid Map</h4>
-            <div class="meta-grid mb-6">
-                <div class="plot">#01</div><div class="plot">#02</div><div class="plot">#03</div><div class="plot">#04</div><div class="plot">#05</div>
-                <div class="plot">#06</div><div class="plot plot-owned">YOU</div><div class="plot">#08</div><div class="plot">#09</div><div class="plot">#10</div>
+            <div class="glass p-4 mb-8 h-32 flex items-end justify-around overflow-hidden">
+                <div class="chart-bar h-[40%]"></div><div class="chart-bar h-[60%]"></div><div class="chart-bar down h-[30%]"></div>
+                <div class="chart-bar h-[70%]"></div><div class="chart-bar h-[90%]"></div><div class="chart-bar down h-[50%]"></div>
+                <div class="chart-bar h-[80%]"></div><div class="chart-bar h-[65%]"></div><div class="chart-bar down h-[40%]"></div>
+                <div class="chart-bar h-[85%]"></div><div class="chart-bar h-[100%]"></div><div class="chart-bar down h-[20%]"></div>
             </div>
-            
-            <div class="glass overflow-hidden border-t border-white/10">
-                <div class="relative h-48">
-                    <img src="https://images.unsplash.com/photo-1500382017468-9049fee74a62?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
-                    <div class="absolute top-4 left-4 bg-black/60 px-2 py-1 rounded text-[9px] font-bold border border-white/20">NFT: #VIV-992</div>
+
+            <h3 class="text-sm font-black text-gray-500 uppercase tracking-widest mb-4">MarketWatch</h3>
+            <div class="space-y-3">
+                <div class="glass p-5 flex justify-between items-center border-l-4 border-[#0ecb81]">
+                    <div>
+                        <h4 class="font-black text-white">Vivand Sector-4</h4>
+                        <p class="text-[10px] text-gray-500">Vol: 1.2M • NFT Verified</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-black text-white">₹ 3,421.50</p>
+                        <p class="text-[10px] text-[#0ecb81]">+2.45%</p>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <h5 class="text-xl font-black mb-1 uppercase">Vivand Smart Heights</h5>
-                    <p class="text-[9px] opacity-40 mb-6 uppercase tracking-widest">Sector 9 • Buy / Sell / Rent</p>
-                    <div class="flex gap-3">
-                        <button onclick="contactAgent('Customize 3D House')" class="flex-1 bg-white text-black py-4 rounded-2xl font-black text-[9px] uppercase">Customize 3D</button>
-                        <button onclick="contactAgent('Trade Plot')" class="flex-1 bg-green-600 py-4 rounded-2xl font-black text-[9px] uppercase shadow-lg shadow-green-900/40">Market Trade</button>
+                <div class="glass p-5 flex justify-between items-center border-l-4 border-[#f6465d]">
+                    <div>
+                        <h4 class="font-black text-white">Green Plots P8</h4>
+                        <p class="text-[10px] text-gray-500">Vol: 400K • Open for Rent</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-black text-white">₹ 1,120.00</p>
+                        <p class="text-[10px] text-[#f6465d]">-0.82%</p>
                     </div>
                 </div>
             </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-8">
+                <button onclick="contactAgent('BUY Order')" class="btn-buy py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg shadow-[#0ecb81]/20">Buy Land</button>
+                <button onclick="contactAgent('SELL Order')" class="btn-sell py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg shadow-[#f6465d]/20">Sell Asset</button>
+            </div>
         </div>
 
-        <div class="fixed bottom-6 left-6 right-6 glass p-6 flex justify-around items-center shadow-2xl">
-            <div class="nav-item active flex flex-col items-center gap-1"><i class="fa-solid fa-house-chimney text-xl"></i><span class="text-[7px] font-black">HOME</span></div>
-            <div class="nav-item flex flex-col items-center gap-1"><i class="fa-solid fa-map-location-dot text-xl"></i><span class="text-[7px] font-black">WORLD</span></div>
-            <div class="nav-item flex flex-col items-center gap-1"><i class="fa-solid fa-wallet text-xl"></i><span class="text-[7px] font-black">WALLET</span></div>
-            <div class="nav-item flex flex-col items-center gap-1"><i class="fa-solid fa-user-circle text-xl"></i><span class="text-[7px] font-black">PROFILE</span></div>
+        <div class="fixed bottom-0 left-0 right-0 bg-[#181a20] border-t border-[#2b3139] p-5 flex justify-around">
+            <div class="flex flex-col items-center nav-active"><i class="fa-solid fa-house"></i><span class="text-[8px] mt-1">HOME</span></div>
+            <div class="flex flex-col items-center text-gray-500"><i class="fa-solid fa-chart-pie"></i><span class="text-[8px] mt-1">MARKET</span></div>
+            <div class="flex flex-col items-center text-gray-500"><i class="fa-solid fa-layer-group"></i><span class="text-[8px] mt-1">TRADE</span></div>
+            <div class="flex flex-col items-center text-gray-500"><i class="fa-solid fa-user"></i><span class="text-[8px] mt-1">PROFILE</span></div>
         </div>
     </div>
 
@@ -141,20 +140,18 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Transitions
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                splash.style.opacity = "0";
+                document.getElementById('splash-screen').style.opacity = "0";
                 setTimeout(() => {
-                    splash.classList.add('hidden');
+                    document.getElementById('splash-screen').classList.add('hidden');
                     document.getElementById('login-section').classList.remove('hidden');
                 }, 1000);
-            }, 3500);
+            }, 3000);
         });
 
-        // Auth Functions
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'normal' });
+
         window.sendOTP = function() {
             let p = document.getElementById('user-phone').value;
             if(!p.startsWith('+')) p = '+91' + p;
@@ -162,22 +159,21 @@
                 window.confirmationResult = res;
                 document.getElementById('login-form').classList.add('hidden');
                 document.getElementById('otp-form').classList.remove('hidden');
-                alert("Identity Code Sent!");
             }).catch(e => alert(e.message));
         };
+
         window.verifyOTP = function() {
             const c = document.getElementById('otp-code').value;
             window.confirmationResult.confirm(c).then(() => {
                 document.getElementById('login-section').classList.add('hidden');
-                const d = document.getElementById('dashboard');
-                d.classList.remove('hidden');
-                setTimeout(() => d.style.opacity = "1", 50);
+                document.getElementById('dashboard').classList.remove('hidden');
+                setTimeout(() => document.getElementById('dashboard').style.opacity = "1", 50);
             }).catch(() => alert("Error"));
         };
+
         window.contactAgent = function(a) {
-            window.open(`https://wa.me/919420545485?text=Namaste Vivand! I am interested in: ${a}`, '_blank');
+            window.open(`https://wa.me/919420545485?text=PRO-TRADE ORDER: ${a}`, '_blank');
         };
     </script>
-    <style>@keyframes load { to { width: 100%; } }</style>
 </body>
 </html>
