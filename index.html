@@ -3,145 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BHUMI - 3D Virtual Estate</title>
+    <title>BHUMI - Digital Land Economy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
-        
-        body { 
-            font-family: 'Outfit', sans-serif; 
-            margin: 0;
-            overflow: hidden;
-            background: #022c22;
-        }
-
-        /* --- SPLASH SCREEN WITH BG IMAGE --- */
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: linear-gradient(rgba(2, 44, 34, 0.8), rgba(2, 44, 34, 0.95)), 
-                        url('https://images.unsplash.com/photo-1500382017468-9049fee74a62?auto=format&fit=crop&w=1600&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* 3D Floating Icon */
-        .logo-icon {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            border-radius: 50% 0 50% 50%;
-            transform: rotate(-45deg);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset -5px -5px 15px rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: float 3s infinite ease-in-out;
-            margin-bottom: 25px;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .logo-icon i {
-            transform: rotate(45deg);
-            color: white;
-            font-size: 2.8rem;
-        }
-
-        .logo-text {
-            font-size: 4.5rem;
-            font-weight: 900;
-            letter-spacing: 10px;
-            color: white;
-            text-shadow: 0 15px 30px rgba(0,0,0,0.5);
-        }
-
-        .tagline {
-            color: #34d399;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-top: 5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: rotate(-45deg) translateY(0); }
-            50% { transform: rotate(-45deg) translateY(-25px); }
-        }
-
-        .loader-container {
-            width: 220px;
-            height: 3px;
-            background: rgba(255,255,255,0.1);
-            margin-top: 50px;
-            border-radius: 10px;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-        }
-
-        .loader-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(to right, #10b981, #34d399);
-            box-shadow: 0 0 15px #10b981;
-            animation: fill 3s ease-in-out forwards;
-        }
-
-        @keyframes fill { to { width: 100%; } }
-
-        /* Smooth Transition */
-        .fade-out {
-            opacity: 0;
-            visibility: hidden;
-            transition: all 1s ease-in-out;
-        }
-
+        body { font-family: 'Outfit', sans-serif; background: #022c22; color: white; margin: 0; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 35px; }
+        .nft-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+        .nft-card:hover { transform: translateY(-12px); border-color: #10b981; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .status-glow { animation: glow 2s infinite alternate; }
+        @keyframes glow { from { box-shadow: 0 0 5px #10b981; } to { box-shadow: 0 0 20px #10b981; } }
+        #splash-screen { position: fixed; inset: 0; z-index: 9999; background: #022c22; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
-        <div class="logo-icon">
-            <i class="fa-solid fa-seedling"></i>
-        </div>
-        <div class="logo-text">BHUMI</div>
-        <div class="tagline">Virtual Land, Real Future</div>
-        
-        <div class="loader-container">
-            <div class="loader-fill"></div>
+        <div class="animate-pulse mb-6 text-green-400 text-8xl"><i class="fa-solid fa-cube"></i></div>
+        <h1 class="text-5xl font-black tracking-[12px]">BHUMI</h1>
+        <p class="text-xs mt-4 text-green-300/40 uppercase tracking-[5px]">Vivand Software Pvt Ltd</p>
+        <div class="w-48 h-1 bg-white/10 mt-10 rounded-full overflow-hidden">
+            <div class="h-full bg-green-500 animate-[load_3s_ease-in-out_forwards]"></div>
         </div>
     </div>
 
-    <div id="app-content" class="hidden opacity-0 transition-opacity duration-1000 flex items-center justify-center min-h-screen p-4">
-        <div class="bg-black/40 backdrop-blur-2xl p-10 rounded-[45px] border border-white/10 text-center w-full max-w-sm shadow-2xl">
-             <div class="inline-block p-3 bg-green-500/20 rounded-2xl mb-4">
-                <i class="fa-solid fa-shield-halved text-green-400 text-2xl"></i>
-             </div>
-             <h2 class="text-3xl font-bold mb-8">Secure Access</h2>
-             <div id="login-form">
-                <input type="tel" id="user-phone" placeholder="9420545485" 
-                    class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-6 text-center text-white outline-none focus:border-green-500 transition-all">
+    <div id="login-section" class="hidden min-h-screen flex items-center justify-center p-6 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+        <div class="glass p-10 w-full max-w-md text-center border-t border-white/20">
+            <h2 class="text-4xl font-black mb-2">Access Portal</h2>
+            <p class="text-green-400/60 text-xs mb-8 uppercase tracking-widest">Secure Blockchain Authentication</p>
+            <div id="login-form">
+                <input type="tel" id="user-phone" placeholder="+91 9420545485" class="w-full bg-white/5 p-5 rounded-2xl mb-6 text-center text-xl outline-none border border-white/10 focus:border-green-500 transition-all">
                 <div id="recaptcha-container" class="flex justify-center mb-6"></div>
-                <button onclick="sendOTP()" class="bg-green-600 hover:bg-green-500 w-full py-5 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-green-900/20 transition-all">
-                    Get Access Code
-                </button>
-             </div>
-             <div id="otp-form" class="hidden">
-                <input type="number" id="otp-code" placeholder="Enter OTP" 
-                    class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-6 text-center text-3xl font-black tracking-widest text-white outline-none">
-                <button onclick="verifyOTP()" class="bg-white text-green-900 w-full py-5 rounded-2xl font-black uppercase tracking-widest">
-                    Verify & Enter
-                </button>
-             </div>
+                <button onclick="sendOTP()" class="bg-green-600 hover:bg-green-500 w-full py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl transition-all">Initialize Login</button>
+            </div>
+            <div id="otp-form" class="hidden">
+                <input type="number" id="otp-code" placeholder="000000" class="w-full bg-white/10 p-5 rounded-2xl mb-6 text-center text-4xl font-black tracking-[10px] outline-none border-2 border-green-500">
+                <button onclick="verifyOTP()" class="bg-white text-green-900 w-full py-5 rounded-2xl font-black uppercase shadow-lg">Confirm Identity</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard" class="hidden min-h-screen p-6 pb-28">
+        <div class="flex justify-between items-start mb-8">
+            <div>
+                <h2 class="text-4xl font-black">Portfolio</h2>
+                <p class="text-green-400 text-sm font-bold tracking-widest uppercase">Verified Investor</p>
+            </div>
+            <button onclick="location.reload()" class="bg-red-500/10 p-4 rounded-2xl border border-red-500/20 text-red-500"><i class="fa-solid fa-power-off"></i></button>
+        </div>
+
+        <div class="glass p-8 mb-10 relative overflow-hidden border-l-8 border-green-500">
+            <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl"><i class="fa-solid fa-chart-line"></i></div>
+            <p class="text-xs uppercase tracking-tighter text-white/50 mb-1">Estimated Asset Value</p>
+            <h3 class="text-4xl font-black mb-4">₹ 42,50,000 <span class="text-green-400 text-sm ml-2">+12.4%</span></h3>
+            <div class="flex gap-4">
+                <div class="bg-white/5 px-4 py-2 rounded-xl text-xs border border-white/10">Owned: 4 Parcels</div>
+                <div class="bg-white/5 px-4 py-2 rounded-xl text-xs border border-white/10">Yield: 1.2% / mo</div>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center mb-6">
+            <h4 class="text-xl font-bold">Digital Land Assets</h4>
+            <button class="text-green-400 text-xs font-bold uppercase"><i class="fa-solid fa-filter mr-1"></i> Filter</button>
+        </div>
+        
+        <div class="grid gap-8">
+            <div class="nft-card glass">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fee74a62?auto=format&fit=crop&w=800&q=80" class="w-full h-52 object-cover rounded-t-[35px]">
+                    <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-[10px] font-bold border border-white/20">NFT ID: #BHU-8821</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h5 class="text-xl font-bold">Vivand Heights - Sector 4</h5>
+                            <p class="text-[10px] text-white/40 uppercase tracking-widest"><i class="fa-solid fa-location-dot text-green-500 mr-1"></i> Virtual Pune City</p>
+                        </div>
+                        <div class="status-glow bg-green-500 h-3 w-3 rounded-full"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-2 mb-6 text-center">
+                        <div class="bg-white/5 p-3 rounded-2xl border border-white/5">
+                            <i class="fa-solid fa-expand text-green-400 text-xs mb-1"></i>
+                            <p class="text-[8px] opacity-40">SIZE</p>
+                            <p class="text-[10px] font-bold">100sq</p>
+                        </div>
+                        <div class="bg-white/5 p-3 rounded-2xl border border-white/5">
+                            <i class="fa-solid fa-hammer text-blue-400 text-xs mb-1"></i>
+                            <p class="text-[8px] opacity-40">BUILD</p>
+                            <p class="text-[10px] font-bold">Ready</p>
+                        </div>
+                        <div class="bg-white/5 p-3 rounded-2xl border border-white/5">
+                            <i class="fa-solid fa-money-bill-trend-up text-yellow-400 text-xs mb-1"></i>
+                            <p class="text-[8px] opacity-40">RENT</p>
+                            <p class="text-[10px] font-bold">₹5k/m</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="contactAgent('Vivand Heights #8821')" class="flex-1 bg-green-600 hover:bg-green-500 py-4 rounded-2xl font-black text-xs uppercase transition-all">Market Trade</button>
+                        <button class="flex-1 bg-white text-black py-4 rounded-2xl font-black text-xs uppercase transition-all">Develop 3D</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fixed bottom-6 left-6 right-6 glass p-5 flex justify-around items-center border-t border-white/20 shadow-2xl">
+            <div class="flex flex-col items-center text-green-400">
+                <i class="fa-solid fa-house-chimney text-xl"></i>
+                <span class="text-[8px] mt-1 font-bold">HOME</span>
+            </div>
+            <div class="flex flex-col items-center opacity-30">
+                <i class="fa-solid fa-earth-asia text-xl"></i>
+                <span class="text-[8px] mt-1 font-bold">WORLD</span>
+            </div>
+            <div class="flex flex-col items-center opacity-30">
+                <i class="fa-solid fa-wallet text-xl"></i>
+                <span class="text-[8px] mt-1 font-bold">ASSETS</span>
+            </div>
+            <div class="flex flex-col items-center opacity-30">
+                <i class="fa-solid fa-gear text-xl"></i>
+                <span class="text-[8px] mt-1 font-bold">SETUP</span>
+            </div>
         </div>
     </div>
 
@@ -162,22 +147,15 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Splash Timeout
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                const content = document.getElementById('app-content');
-                splash.classList.add('fade-out');
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    content.classList.remove('hidden');
-                    setTimeout(() => content.style.opacity = '1', 50);
-                }, 1000);
-            }, 3500);
+                document.getElementById('splash-screen').classList.add('hidden');
+                document.getElementById('login-section').classList.remove('hidden');
+            }, 3000);
         });
 
-        // Auth Functions
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'normal' });
+
         window.sendOTP = function() {
             let phone = document.getElementById('user-phone').value;
             if(!phone.startsWith('+')) phone = '+91' + phone;
@@ -185,15 +163,23 @@
                 window.confirmationResult = res;
                 document.getElementById('login-form').classList.add('hidden');
                 document.getElementById('otp-form').classList.remove('hidden');
-            }).catch(err => alert("Error: " + err.message));
-        }
+            }).catch(err => alert(err.message));
+        };
+
         window.verifyOTP = function() {
             const code = document.getElementById('otp-code').value;
             window.confirmationResult.confirm(code).then(() => {
-                alert("Login Success! Welcome to Bhumi.");
-                // Ready for Dashboard
-            }).catch(() => alert("Invalid OTP Code"));
-        }
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+            }).catch(() => alert("Invalid OTP"));
+        };
+
+        window.contactAgent = function(propertyName) {
+            const myNumber = "919420545485";
+            const message = `Namaste Vivand! I want to trade land parcel: ${propertyName}.`;
+            window.open(`https://wa.me/${myNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        };
     </script>
+    <style>@keyframes load { to { width: 100%; } }</style>
 </body>
 </html>
